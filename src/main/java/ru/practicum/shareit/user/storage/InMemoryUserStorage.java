@@ -1,12 +1,13 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.storage;
 
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.ConflictException;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.*;
 
 @Repository
-public class UserStorage {
+public class InMemoryUserStorage implements UserStorage{
     private Map<Long, User> users = new HashMap<>();
     private long count;
 

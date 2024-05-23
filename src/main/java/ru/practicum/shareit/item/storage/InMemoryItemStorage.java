@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item;
+package ru.practicum.shareit.item.storage;
 
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.item.model.Item;
@@ -6,7 +6,7 @@ import ru.practicum.shareit.item.model.Item;
 import java.util.*;
 
 @Repository
-public class ItemStorage {
+public class InMemoryItemStorage implements ItemStorage{
     private final Map<Long, List<Item>> userItemIndex = new LinkedHashMap<>();
     private long count;
 

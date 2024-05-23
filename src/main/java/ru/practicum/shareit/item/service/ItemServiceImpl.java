@@ -1,12 +1,13 @@
-package ru.practicum.shareit.item;
+package ru.practicum.shareit.item.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.item.storage.InMemoryItemStorage;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.UserStorage;
+import ru.practicum.shareit.user.storage.InMemoryUserStorage;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,12 +15,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ItemService {
-    private final ItemStorage itemStorage;
-    private final UserStorage userStorage;
+public class ItemServiceImpl implements ItemService{
+    private final InMemoryItemStorage itemStorage;
+    private final InMemoryUserStorage userStorage;
 
     @Autowired
-    public ItemService(ItemStorage itemStorage, UserStorage userStorage) {
+    public ItemServiceImpl(InMemoryItemStorage itemStorage, InMemoryUserStorage userStorage) {
         this.itemStorage = itemStorage;
         this.userStorage = userStorage;
     }

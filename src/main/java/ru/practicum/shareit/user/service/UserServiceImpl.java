@@ -1,20 +1,23 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.user.storage.InMemoryUserStorage;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class UserService {
-    private final UserStorage userStorage;
+public class UserServiceImpl implements UserService{
+    private final InMemoryUserStorage userStorage;
 
     @Autowired
-    public UserService(UserStorage userStorage) {
+    public UserServiceImpl(InMemoryUserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
