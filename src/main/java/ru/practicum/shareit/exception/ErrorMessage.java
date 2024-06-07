@@ -4,8 +4,8 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class ErrorResponse {
-    private final String message;
+public class ErrorMessage {
+    private final String error;
     private final Throwable throwable;
     private final HttpStatus httpStatus;
 }

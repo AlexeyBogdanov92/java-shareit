@@ -9,44 +9,52 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
-public class ErrorHandler {
+public class ExceptionApiHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFoundException(RuntimeException ex) {
+    public ErrorMessage handleNotFoundException(RuntimeException ex) {
         String message = ex.getMessage();
         log.info("Получен статус 404: {}, {}", ex.getMessage(), ex.getStackTrace());
-        return new ErrorResponse(message, ex.getCause(), HttpStatus.NOT_FOUND);
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleConflictException(RuntimeException ex) {
+    public ErrorMessage handleConflictException(RuntimeException ex) {
         String message = ex.getMessage();
         log.info("Получен статус 409: {}, {}", ex.getMessage(), ex.getStackTrace());
-        return new ErrorResponse(message, ex.getCause(), HttpStatus.CONFLICT);
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UnsupportedOperationException.class)
     @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
-    public ErrorResponse handleUnsupportedOperationException(RuntimeException ex) {
+    public ErrorMessage handleUnsupportedOperationException(RuntimeException ex) {
         String message = ex.getMessage();
         log.info("Получен статус 501: {}, {}", ex.getMessage(), ex.getStackTrace());
-        return new ErrorResponse(message, ex.getCause(), HttpStatus.NOT_IMPLEMENTED);
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.NOT_IMPLEMENTED);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ErrorMessage handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         log.info("Получен статус 400: {}, {}", ex.getMessage(), ex.getStackTrace());
-        return new ErrorResponse(message, ex.getCause(), HttpStatus.BAD_REQUEST);
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BookingStatusException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleBookingException(BookingStatusException ex) {
+        String message = ex.getMessage();
+        log.info("Получен статус 400: {}, {}", ex.getMessage(), ex.getStackTrace());
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleUnhandledException(Throwable ex) {
+    public ErrorMessage handleUnhandledException(Throwable ex) {
         String message = ex.getMessage();
         log.info("Получен статус 500: {}, {}", ex.getMessage(), ex.getStackTrace());
-        return new ErrorResponse(message, ex.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ErrorMessage(message, ex.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
