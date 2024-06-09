@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user.service;
 
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,17 +35,13 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUserById(long userId, UserDto user) {
         User expectedUser = checkUserId(userId);
 
-        if (user.getName() != null && !user.getName().isBlank()) {
-            expectedUser.setName(user.getName());
-        }
-        if (user.getEmail() != null && !user.getEmail().isBlank()) {
-            expectedUser.setEmail(user.getEmail());
-        }
-        expectedUser.setId(userId);
-        userStorage.save(expectedUser);
+        updateUserFields(user, expectedUser);
 
-        log.info("Обновлен пользователь с id {}", userId);
-        return UserMapper.toUserDto(expectedUser);
+        return Try.of(() -> userStorage.save(expectedUser))
+                .onSuccess(savedUser -> log.info("Пользователь с id {} успешно обновлен", userId))
+                .onFailure(e -> log.error("Ошибка при обновлении пользователя с id {}: {}", userId, e.getMessage()))
+                .map(savedUser -> UserMapper.toUserDto(expectedUser))
+                .getOrElseThrow(e -> new RuntimeException("Не удалось обновить пользователя", e));
     }
 
     @Transactional(readOnly = true)
@@ -71,5 +69,14 @@ public class UserServiceImpl implements UserService {
     private User checkUserId(long userId) {
         return userStorage.findById(userId).orElseThrow(() ->
                 new NotFoundException(String.format("Пользователь с id %d не существует", userId)));
+    }
+
+    private void updateUserFields(UserDto source, User target) {
+        if (source.getName() != null && !source.getName().isBlank()) {
+            target.setName(source.getName());
+        }
+        if (source.getEmail() != null && !source.getEmail().isBlank()) {
+            target.setEmail(source.getEmail());
+        }
     }
 }
