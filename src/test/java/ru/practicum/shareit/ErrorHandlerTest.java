@@ -1,4 +1,5 @@
 package ru.practicum.shareit;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ErrorHandlerTest {
     ErrorHandler errorHandler;
+
     @BeforeEach
     void setUp() {
         errorHandler = new ErrorHandler();
@@ -33,7 +35,7 @@ public class ErrorHandlerTest {
 
     @Test
     void handleUnsupportedOperationException() {
-        UnsupportedOperationException  unsupportedOperationException = new UnsupportedOperationException("Smth is not support");
+        UnsupportedOperationException unsupportedOperationException = new UnsupportedOperationException("Smth is not support");
 
         ErrorResponse response = errorHandler.handleUnsupportedOperationException(unsupportedOperationException);
 
