@@ -2,11 +2,11 @@ package ru.practicum.shareit.item.service;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.booking.service.BookingMapper;
-import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.comment.CommentDtoResponse;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoForBooking;
 import ru.practicum.shareit.item.dto.ItemDtoShort;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
-                .request(item.getRequest() != null ? item.getRequest() : null)
+                .requestId(item.getRequestId())
                 .build();
     }
 
@@ -29,7 +29,7 @@ public class ItemMapper {
                 .description(item.getDescription())
                 .owner(user)
                 .available(item.getAvailable())
-                .request(null) // пока не нужно
+                .requestId(item.getRequestId())
                 .build();
     }
 
@@ -39,7 +39,7 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
-                .request(item.getRequest() != null ? item.getRequest() : null)
+                .requestId(item.getRequestId())
                 .lastBooking(BookingMapper.toBookingForItemDto(item.getLastBooking()))
                 .nextBooking(BookingMapper.toBookingForItemDto(item.getNextBooking()))
                 .comments(comments)
