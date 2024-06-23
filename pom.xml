@@ -79,11 +79,6 @@
             <artifactId>vavr</artifactId>
             <version>0.10.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>4.7.3.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -173,7 +168,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.7.0.0</version>
+                    <version>4.7.3.1</version>
                     <configuration>
                         <effort>Max</effort>
                         <threshold>High</threshold>
