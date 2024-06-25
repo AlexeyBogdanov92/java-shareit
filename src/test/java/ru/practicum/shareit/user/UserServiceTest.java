@@ -32,7 +32,7 @@ class UserServiceTest {
     private User testUser;
 
     @BeforeEach
-    void init() {
+    public void init() {
         testUser = User.builder()
                 .id(1L)
                 .name("UserName")
@@ -41,7 +41,7 @@ class UserServiceTest {
     }
 
     @Test
-    void createUser_whenValidUser_thenReturnUser() {
+    public void createUser_whenValidUser_thenReturnUser() {
         UserDto userToSave = new UserDto();
         User savedUser = new User();
         when(userStorage.save(UserMapper.toUser(userToSave)))
@@ -55,7 +55,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserById_whenValidUser_thenReturnUser() {
+    public void updateUserById_whenValidUser_thenReturnUser() {
         long userId = 1L;
 
         when(userStorage.findById(userId)).thenReturn(Optional.of(testUser));
@@ -77,7 +77,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserById_whenEmptyUserNameAndEmail_thenReturnUser() {
+    public void updateUserById_whenEmptyUserNameAndEmail_thenReturnUser() {
         long userId = 1L;
 
         when(userStorage.findById(userId)).thenReturn(Optional.of(testUser));
@@ -98,7 +98,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserById_whenInvalidUserId_thenReturnException() {
+    public void updateUserById_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
         User user = new User();
 
@@ -112,7 +112,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserById_whenValidUserId_thenReturnUser()  {
+    public void getUserById_whenValidUserId_thenReturnUser()  {
         long userId = 1L;
         User expectedUser = new User();
 
@@ -125,7 +125,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserById_whenInvalidUserId_thenReturnException() {
+    public void getUserById_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
 
         when(userStorage.findById(userId))
@@ -137,7 +137,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getAllUsers_whenUserListNotEmpty_thenReturnList() {
+    public void getAllUsers_whenUserListNotEmpty_thenReturnList() {
         List<User> users = List.of(testUser);
 
         when(userStorage.findAll()).thenReturn(users);
@@ -149,7 +149,7 @@ class UserServiceTest {
     }
 
     @Test
-    void deleteUserById_whenValidUserId_thenDeleteUser() {
+    public void deleteUserById_whenValidUserId_thenDeleteUser() {
         long userId = 1L;
         when(userStorage.findById(userId))
                 .thenReturn(Optional.of(testUser));
@@ -161,7 +161,7 @@ class UserServiceTest {
     }
 
     @Test
-    void deleteUserById_whenInvalidUserId_thenReturnException() {
+    public void deleteUserById_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
 
         when(userStorage.findById(userId))

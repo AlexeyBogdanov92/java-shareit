@@ -55,7 +55,7 @@ class ItemServiceTest {
     private ItemDtoShort itemDtoShort;
 
     @BeforeEach
-    void init() {
+    public void init() {
         page = Paginator.simplePage(1, 5);
 
         itemDtoShort = new ItemDtoShort();
@@ -79,7 +79,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createItem_whenValidUserAndValidItemReq_thenReturnItem() {
+    public void createItem_whenValidUserAndValidItemReq_thenReturnItem() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(itemStorage.save(ItemMapper.toItem(itemDtoShort, testUser)))
@@ -92,7 +92,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createItem_whenInvalidUserId_thenReturnException() {
+    public void createItem_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
         when(userStorage.findById(userId)).thenReturn(Optional.empty());
 
@@ -105,7 +105,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createItem_whenInvalidItemReqId_thenReturnException() {
+    public void createItem_whenInvalidItemReqId_thenReturnException() {
         ItemDtoShort itemDtoShort = new ItemDtoShort();
         itemDtoShort.setRequestId(5L);
         long userId = 1L;
@@ -123,7 +123,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void updateItem_whenValidItem_thenReturnItem() {
+    public void updateItem_whenValidItem_thenReturnItem() {
         when(itemStorage.findById(testItem.getId())).thenReturn(Optional.of(testItem));
 
         ItemDtoShort newItem = ItemDtoShort.builder()
@@ -145,7 +145,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void updateItem_whenInvalidItemId_thenReturnException() {
+    public void updateItem_whenInvalidItemId_thenReturnException() {
         when(itemStorage.findById(testItem.getId())).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> itemService.updateItem(testUser.getId(), testItem.getId(), itemDtoShort));
@@ -156,7 +156,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void updateItem_whenEmptyNameDescriptionAvailable_thenReturnItemWithOldFields() {
+    public void updateItem_whenEmptyNameDescriptionAvailable_thenReturnItemWithOldFields() {
         when(itemStorage.findById(testItem.getId())).thenReturn(Optional.of(testItem));
 
         ItemDtoShort newItem = ItemDtoShort.builder()
@@ -178,7 +178,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void getItem_whenValidItemIdAndOwnerId_thenReturnItemForOwner() {
+    public void getItem_whenValidItemIdAndOwnerId_thenReturnItemForOwner() {
         when(itemStorage.findById(testItem.getId()))
                 .thenReturn(Optional.of(testItem));
         when(commentStorage.findAllByItemId(testItem.getId())).thenReturn(List.of());
@@ -191,7 +191,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void getItem_whenValidItemId_thenReturnItem() {
+    public void getItem_whenValidItemId_thenReturnItem() {
         when(itemStorage.findById(testItem.getId()))
                 .thenReturn(Optional.of(testItem));
         when(commentStorage.findAllByItemId(testItem.getId())).thenReturn(List.of());
@@ -204,7 +204,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void getItem_whenInvalidItemId_thenReturnException() {
+    public void getItem_whenInvalidItemId_thenReturnException() {
         when(itemStorage.findById(testItem.getId()))
                 .thenReturn(Optional.empty());
 
@@ -216,7 +216,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void getItemsByUser_whenValidUserId_thenReturnItemList() {
+    public void getItemsByUser_whenValidUserId_thenReturnItemList() {
         List<Item> items = new ArrayList<>();
         items.add(testItem);
 
@@ -233,7 +233,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void searchItems_whenQueryIsBlank_thenReturnEmptyList() {
+    public void searchItems_whenQueryIsBlank_thenReturnEmptyList() {
         String query = "";
         List<ItemDtoShort> actualList = itemService.searchItems(query, 0, 5);
 
@@ -242,7 +242,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void searchItems_whenValidQuery_thenReturnItemList() {
+    public void searchItems_whenValidQuery_thenReturnItemList() {
         String query = "brain";
         when(itemStorage.search(anyString(), any(PageRequest.class)))
                 .thenReturn(List.of(testItem));
@@ -255,7 +255,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createComment_whenValidUserId_thenReturnComment() {
+    public void createComment_whenValidUserId_thenReturnComment() {
         LocalDateTime dateTime = LocalDateTime.now();
         Comment testComment = Comment.builder()
                 .id(1L)
@@ -279,7 +279,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createComment_whenInvalidUserId_thenReturnException() {
+    public void createComment_whenInvalidUserId_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -293,7 +293,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void createComment_whenInvalidBookingEnd_thenReturnException() {
+    public void createComment_whenInvalidBookingEnd_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(bookingStorage.existsByItemIdAndBookerIdAndEndBefore(anyLong(), anyLong(), any(LocalDateTime.class)))

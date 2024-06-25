@@ -41,7 +41,7 @@ class UserControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(userController)
                 .build();
@@ -60,7 +60,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers_whenFewUsers_thenReturnUsers() throws Exception {
+    public void getAllUsers_whenFewUsers_thenReturnUsers() throws Exception {
         List<UserDto> users = List.of(firstUser, secondUser);
 
         when(userService.getAllUsers())
@@ -82,7 +82,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers_whenEmptyUsersList_thenReturnEmptyList() throws Exception {
+    public void getAllUsers_whenEmptyUsersList_thenReturnEmptyList() throws Exception {
         List<UserDto> users = List.of();
 
         when(userService.getAllUsers())
@@ -97,7 +97,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenAnyUser_thenReturnUser() throws Exception {
+    public void createUser_whenAnyUser_thenReturnUser() throws Exception {
         when(userService.createUser(any()))
                 .thenReturn(firstUser);
 
@@ -114,7 +114,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenEmptyUserName_thenReturnException() throws Exception {
+    public void createUser_whenEmptyUserName_thenReturnException() throws Exception {
         firstUser.setName("");
 
         mvc.perform(post("/users")
@@ -128,7 +128,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenLargestUserName_thenReturnException() throws Exception {
+    public void createUser_whenLargestUserName_thenReturnException() throws Exception {
         firstUser.setName("Пабло Диего Хозе Франциско де Паула Хуан Непомукено Криспин Криспиано де ла Сантисима Тринидад Руиз Пикассо");
 
         mvc.perform(post("/users")
@@ -141,7 +141,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenEmptyEmail_thenReturnException() throws Exception {
+    public void createUser_whenEmptyEmail_thenReturnException() throws Exception {
         firstUser.setEmail("");
 
         mvc.perform(post("/users")
@@ -155,7 +155,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenLargestEmail_thenReturnException() throws Exception {
+    public void createUser_whenLargestEmail_thenReturnException() throws Exception {
         firstUser.setEmail("contact-admin-hello-webmaster-info-services-peter-crazy-but-oh-so-ubber-cool-english-alphabet-loverer-abcdefghijklmnopqrstuvwxyz@please-try-to.send-me-an-email-if-you-can-possibly-begin-to-remember-this-coz.this-is-the-longest-email-address-known-to-man-but-to-be-honest.this-is-such-a-stupidly-long-sub-domain-it-could-go-on-forever.pacraig.com");
 
         mvc.perform(post("/users")
@@ -168,7 +168,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenInvalidEmailPattern_thenReturnException() throws Exception {
+    public void createUser_whenInvalidEmailPattern_thenReturnException() throws Exception {
         firstUser.setEmail("@user.mail!&");
 
         mvc.perform(post("/users")
@@ -181,7 +181,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser_whenAnyUser_thenReturnUser() throws Exception {
+    public void updateUser_whenAnyUser_thenReturnUser() throws Exception {
         firstUser.builder().name("UpdateName").email("update@mail.ru").build();
 
         when(userService.updateUserById(1L, firstUser))
@@ -200,7 +200,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser_whenLargestUserName_thenReturnException() throws Exception {
+    public void updateUser_whenLargestUserName_thenReturnException() throws Exception {
         firstUser.setName("Пабло Диего Хозе Франциско де Паула Хуан Непомукено Криспин Криспиано де ла Сантисима Тринидад Руиз Пикассо");
 
         mvc.perform(patch("/users/{userId}", 1L)
@@ -214,7 +214,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser_whenLargestEmail_thenReturnException() throws Exception {
+    public void updateUser_whenLargestEmail_thenReturnException() throws Exception {
         firstUser.setEmail("contact-admin-hello-webmaster-info-services-peter-crazy-but-oh-so-ubber-cool-english-alphabet-loverer-abcdefghijklmnopqrstuvwxyz@please-try-to.send-me-an-email-if-you-can-possibly-begin-to-remember-this-coz.this-is-the-longest-email-address-known-to-man-but-to-be-honest.this-is-such-a-stupidly-long-sub-domain-it-could-go-on-forever.pacraig.com");
 
         mvc.perform(patch("/users/{userId}", 1L)
@@ -228,7 +228,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser_whenInvalidEmailPattern_thenReturnException() throws Exception {
+    public void updateUser_whenInvalidEmailPattern_thenReturnException() throws Exception {
         firstUser.setEmail("@user.mail!&");
 
         mvc.perform(patch("/users/{userId}", 1L)
@@ -241,7 +241,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUser_whenAnyId_thenReturnUser() throws Exception {
+    public void getUser_whenAnyId_thenReturnUser() throws Exception {
         long id = 1L;
 
         when(userService.getUserById(id))
@@ -259,7 +259,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUser_whenAnyId_thenReturnOk() throws Exception {
+    public void deleteUser_whenAnyId_thenReturnOk() throws Exception {
         long id = 1L;
 
         mvc.perform(delete("/users/{userId}", id))

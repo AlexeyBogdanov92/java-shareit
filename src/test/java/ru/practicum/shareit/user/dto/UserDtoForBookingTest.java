@@ -15,7 +15,7 @@ class UserDtoForBookingTest {
     private JacksonTester<UserDtoForBooking> json;
 
     @Test
-    void testUserDtoForBooking() throws Exception {
+    public void testUserDtoForBooking() throws Exception {
         UserDtoForBooking dto = UserDtoForBooking.builder()
                 .id(1L)
                 .build();

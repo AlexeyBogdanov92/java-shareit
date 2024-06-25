@@ -45,7 +45,7 @@ class ItemRequestControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(itemRequestController)
                 .build();
@@ -60,7 +60,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void createItemRequest_whenValidItemRequest_thenReturnItemRequest() throws Exception {
+    public void createItemRequest_whenValidItemRequest_thenReturnItemRequest() throws Exception {
         ItemRequestDtoRequest requestDto = ItemRequestDtoRequest.builder()
                 .description("desc")
                 .build();
@@ -83,7 +83,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void createItemRequest_whenEmptyItemRequest_thenReturnError() throws Exception {
+    public void createItemRequest_whenEmptyItemRequest_thenReturnError() throws Exception {
         ItemRequestDtoRequest invalidRequest = ItemRequestDtoRequest.builder()
                 .description("")
                 .build();
@@ -100,7 +100,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void createItemRequest_whenBigInvalidItemRequest_thenReturnError() throws Exception {
+    public void createItemRequest_whenBigInvalidItemRequest_thenReturnError() throws Exception {
         ItemRequestDtoRequest invalidRequest = ItemRequestDtoRequest.builder()
                 .description("Реализовать юнит-тесты для всего кода, содержащего логику. " +
                         "Выберите те классы, которые содержат в себе нетривиальные методы, условия и ветвления. " +
@@ -123,7 +123,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequestsById_whenValidId_thenReturnItemRequest() throws Exception {
+    public void getRequestsById_whenValidId_thenReturnItemRequest() throws Exception {
         long id = 1L;
 
         when(itemRequestService.getRequestsById(anyLong(), anyLong()))
@@ -142,7 +142,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getAllRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
+    public void getAllRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of();
 
         when(itemRequestService.getAllRequests(anyLong(), anyInt(), anyInt()))
@@ -158,7 +158,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getAllRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
+    public void getAllRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of(responseDto);
 
         when(itemRequestService.getAllRequests(anyLong(), anyInt(), anyInt()))
@@ -174,7 +174,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
+    public void getRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of();
 
         when(itemRequestService.getRequestsByOwner(anyLong(), anyInt(), anyInt()))
@@ -190,7 +190,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
+    public void getRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of(responseDto);
 
         when(itemRequestService.getRequestsByOwner(anyLong(), anyInt(), anyInt()))

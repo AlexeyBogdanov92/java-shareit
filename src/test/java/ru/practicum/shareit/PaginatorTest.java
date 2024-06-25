@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaginatorTest {
 
     @Test
-    void withSort_whenValidFromAndSize_thenReturnPageRequest() {
+    public void withSort_whenValidFromAndSize_thenReturnPageRequest() {
         int from = 0;
         int size = 5;
         PageRequest expectedPageRequest = PageRequest.of(from / size, size, Constant.SORT_BY_CREATED_DESC);
@@ -21,7 +21,7 @@ class PaginatorTest {
     }
 
     @Test
-    void simplePage_whenValidFromAndSize_thenReturnPageRequest() {
+    public void simplePage_whenValidFromAndSize_thenReturnPageRequest() {
         int from = 0;
         int size = 5;
         PageRequest expectedPageRequest = PageRequest.of(from / size, size);

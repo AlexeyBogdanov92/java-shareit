@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class ItemStorageTest {
     @Autowired
-    ItemStorage itemStorage;
+    private ItemStorage itemStorage;
     @Autowired
-    UserStorage userStorage;
+    private UserStorage userStorage;
 
     @BeforeEach
-    void init() {
+    public void init() {
         User user = User.builder()
                 .id(1L)
                 .name("UserName")
