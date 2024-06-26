@@ -11,6 +11,7 @@ import ru.practicum.shareit.item.service.ItemMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserMapper;
 
+
 @UtilityClass
 public class BookingMapper {
     public BookingDtoResponse toBookingDtoResponse(Booking booking) {

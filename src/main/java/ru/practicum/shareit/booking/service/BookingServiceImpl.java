@@ -2,7 +2,7 @@ package ru.practicum.shareit.booking.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.BookingStateStatus;
@@ -11,22 +11,22 @@ import ru.practicum.shareit.booking.storage.BookingStorage;
 import ru.practicum.shareit.booking.dto.BookingDtoRequest;
 import ru.practicum.shareit.booking.dto.BookingDtoResponse;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.constant.Constant;
 import ru.practicum.shareit.exception.BookingStatusException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.storage.ItemStorage;
+import ru.practicum.shareit.pagination.Paginator;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.storage.UserStorage;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class BookingServiceImpl implements BookingService {
-    private static final Sort SORT_BY_START_DESC = Sort.by(Sort.Direction.DESC, "start");
     private final BookingStorage bookingStorage;
     private final ItemStorage itemStorage;
     private final UserStorage userStorage;
@@ -90,66 +90,68 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingDtoResponse> getSortBookingByUser(long userId, String stateStr) {
+    public List<BookingDtoResponse> getSortBookingByUser(long userId, String stateStr, Integer from, Integer size) {
         BookingStateStatus state = BookingStateStatus.toState(stateStr);
         checkUserId(userId);
-        List<Booking> bookings = new ArrayList<>();
+        List<Booking> bookings = null;
+        PageRequest pagination = Paginator.withSort(from, size, Constant.SORT_BY_START_DESC);
         switch (state) {
             case ALL:
-                bookings = bookingStorage.findAllByBookerId(userId, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerId(userId, pagination);
                 break;
             case CURRENT:
-                bookings = bookingStorage.findAllByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(), LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(), LocalDateTime.now(), pagination);
                 break;
             case PAST:
-                bookings = bookingStorage.findAllByBookerIdAndEndBefore(userId, LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerIdAndEndBefore(userId, LocalDateTime.now(), pagination);
                 break;
             case FUTURE:
-                bookings = bookingStorage.findAllByBookerIdAndStartAfter(userId, LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerIdAndStartAfter(userId, LocalDateTime.now(), pagination);
                 break;
             case WAITING:
-                bookings = bookingStorage.findAllByBookerIdAndStatus(userId, BookingStatus.WAITING, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerIdAndStatus(userId, BookingStatus.WAITING, pagination);
                 break;
             case REJECTED:
-                bookings = bookingStorage.findAllByBookerIdAndStatus(userId, BookingStatus.REJECTED, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByBookerIdAndStatus(userId, BookingStatus.REJECTED, pagination);
                 break;
             default:
                 log.error("getSortBookingByUser(): Ошибка состояния = {}.", state);
                 throw new BookingStatusException(String.format("Ошибка состояния: %s", state));
         }
-        log.info("Получен список бронирований из {} элементов", bookings.size());
+        log.info("Получен список бронирований");
         return bookings.stream().map(BookingMapper::toBookingDtoResponse).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<BookingDtoResponse> getSortBookingByOwner(long userId, String stateStr) {
+    public List<BookingDtoResponse> getSortBookingByOwner(long userId, String stateStr, Integer from, Integer size) {
         BookingStateStatus state = BookingStateStatus.toState(stateStr);
         checkUserId(userId);
-        List<Booking> bookings = new ArrayList<>();
+        List<Booking> bookings = null;
+        PageRequest pagination = Paginator.withSort(from, size, Constant.SORT_BY_START_DESC);
         switch (state) {
             case ALL:
-                bookings = bookingStorage.findAllByItemOwnerId(userId, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerId(userId, pagination);
                 break;
             case CURRENT:
-                bookings = bookingStorage.findAllByItemOwnerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(), LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(), LocalDateTime.now(), pagination);
                 break;
             case PAST:
-                bookings = bookingStorage.findAllByItemOwnerIdAndEndBefore(userId, LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerIdAndEndBefore(userId, LocalDateTime.now(), pagination);
                 break;
             case FUTURE:
-                bookings = bookingStorage.findAllByItemOwnerIdAndStartAfter(userId, LocalDateTime.now(), SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerIdAndStartAfter(userId, LocalDateTime.now(), pagination);
                 break;
             case WAITING:
-                bookings = bookingStorage.findAllByItemOwnerIdAndStatus(userId, BookingStatus.WAITING, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerIdAndStatus(userId, BookingStatus.WAITING, pagination);
                 break;
             case REJECTED:
-                bookings = bookingStorage.findAllByItemOwnerIdAndStatus(userId, BookingStatus.REJECTED, SORT_BY_START_DESC);
+                bookings = bookingStorage.findAllByItemOwnerIdAndStatus(userId, BookingStatus.REJECTED, pagination);
                 break;
             default:
                 log.error("getSortBookingByOwner(): Ошибка состояния = {}.", state);
                 throw new BookingStatusException(String.format("Ошибка состояния: %s", state));
         }
-        log.info("Получен список бронирований из {} элементов", bookings.size());
+        log.info("Получен список бронирований");
         return bookings.stream().map(BookingMapper::toBookingDtoResponse).collect(Collectors.toList());
     }
 
