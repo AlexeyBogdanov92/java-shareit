@@ -17,9 +17,10 @@
     <name>ShareIt</name>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>11</java.version>
+        <org.mapstruct.version>1.6.0.Beta2</org.mapstruct.version>
+        <org.projectlombok.lombok.version>1.18.30</org.projectlombok.lombok.version>
+        <org.projectlombok.ombok-mapstruct-binding.version>0.2.0</org.projectlombok.ombok-mapstruct-binding.version>
     </properties>
 
     <modules>
