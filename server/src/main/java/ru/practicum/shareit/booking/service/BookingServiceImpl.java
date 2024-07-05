@@ -115,6 +115,9 @@ public class BookingServiceImpl implements BookingService {
             case REJECTED:
                 bookings = bookingStorage.findAllByBookerIdAndStatus(userId, BookingStatus.REJECTED, pagination);
                 break;
+            default:
+                log.error("getSortBookingByUser(): Ошибка состояния = {}.", state);
+                throw new BookingStatusException(String.format("Ошибка состояния: %s", state));
         }
         log.info("Получен список бронирований");
         return bookings.stream().map(BookingMapper::toBookingDtoResponse).collect(Collectors.toList());
@@ -145,6 +148,9 @@ public class BookingServiceImpl implements BookingService {
             case REJECTED:
                 bookings = bookingStorage.findAllByItemOwnerIdAndStatus(userId, BookingStatus.REJECTED, pagination);
                 break;
+            default:
+                log.error("getSortBookingByOwner(): Ошибка состояния = {}.", state);
+                throw new BookingStatusException(String.format("Ошибка состояния: %s", state));
         }
         log.info("Получен список бронирований");
         return bookings.stream().map(BookingMapper::toBookingDtoResponse).collect(Collectors.toList());
