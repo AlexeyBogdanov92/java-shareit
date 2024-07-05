@@ -33,14 +33,14 @@ class RequestControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(itemRequestController)
                 .build();
     }
 
     @Test
-    void createItemRequest_whenEmptyItemRequest_thenReturnError() throws Exception {
+    public void createItemRequest_whenEmptyItemRequest_thenReturnError() throws Exception {
         ItemRequestDtoRequest invalidRequest = ItemRequestDtoRequest.builder()
                 .description("")
                 .build();
@@ -57,7 +57,7 @@ class RequestControllerTest {
     }
 
     @Test
-    void createItemRequest_whenBigInvalidItemRequest_thenReturnError() throws Exception {
+    public void createItemRequest_whenBigInvalidItemRequest_thenReturnError() throws Exception {
         ItemRequestDtoRequest invalidRequest = ItemRequestDtoRequest.builder()
                 .description("Реализовать юнит-тесты для всего кода, содержащего логику. " +
                         "Выберите те классы, которые содержат в себе нетривиальные методы, условия и ветвления. " +

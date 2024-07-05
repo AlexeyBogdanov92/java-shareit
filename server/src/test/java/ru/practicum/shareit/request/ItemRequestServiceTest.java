@@ -42,7 +42,7 @@ class ItemRequestServiceTest {
 
 
     @BeforeEach
-    void init() {
+    public void init() {
         page = Paginator.withSort(0, 5, Constant.SORT_BY_CREATED_DESC);
 
         testUser = User.builder()
@@ -60,7 +60,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void createRequest_whenUserIsExist_thenReturnItemRequest() {
+    public void createRequest_whenUserIsExist_thenReturnItemRequest() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(itemRequestStorage.save(any(ItemRequest.class)))
@@ -73,7 +73,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void createRequest_whenInvalidUserId_thenReturnItemRequest() {
+    public void createRequest_whenInvalidUserId_thenReturnItemRequest() {
         long userId = 1L;
         when(userStorage.findById(userId)).thenReturn(Optional.empty());
 
@@ -85,7 +85,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getRequestsByOwner_whenValidUser_thenReturnItemReqList() {
+    public void getRequestsByOwner_whenValidUser_thenReturnItemReqList() {
         List<ItemRequest> itemReqs = new ArrayList<>();
         itemReqs.add(testItemRequest);
 
@@ -103,7 +103,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getRequestsByOwner_whenInvalidUserId_thenReturnException() {
+    public void getRequestsByOwner_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
         when(userStorage.findById(userId)).thenReturn(Optional.empty());
 
@@ -116,7 +116,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getAllRequests_whenValidUserId_thenReturnItemReqList() {
+    public void getAllRequests_whenValidUserId_thenReturnItemReqList() {
         List<ItemRequest> itemReqs = new ArrayList<>();
         itemReqs.add(testItemRequest);
 
@@ -136,7 +136,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getAllRequests_whenInvalidUserId_thenReturnException() {
+    public void getAllRequests_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
         when(userStorage.findById(userId)).thenReturn(Optional.empty());
 
@@ -149,7 +149,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getRequestsById_whenValidUserId_thenReturnItemReq() {
+    public void getRequestsById_whenValidUserId_thenReturnItemReq() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(itemRequestStorage.findById(anyLong()))
@@ -163,7 +163,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getRequestsById_whenInvalidUserId_thenReturnException() {
+    public void getRequestsById_whenInvalidUserId_thenReturnException() {
         long userId = 1L;
         when(userStorage.findById(userId)).thenReturn(Optional.empty());
 
@@ -176,7 +176,7 @@ class ItemRequestServiceTest {
     }
 
     @Test
-    void getRequestsById_whenInvalidItemReqId_thenReturnException() {
+    public void getRequestsById_whenInvalidItemReqId_thenReturnException() {
         long userId = 1L;
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));

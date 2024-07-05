@@ -14,7 +14,7 @@ class UserDtoTest {
     private JacksonTester<UserDto> json;
 
     @Test
-    void testUserDto() throws Exception {
+    public void testUserDto() throws Exception {
         UserDto userDto = UserDto.builder()
                 .id(1L)
                 .name("First_User")

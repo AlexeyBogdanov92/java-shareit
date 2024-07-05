@@ -45,7 +45,7 @@ class ItemRequestControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(itemRequestController)
                 .build();
@@ -60,7 +60,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void createItemRequest_whenValidItemRequest_thenReturnItemRequest() throws Exception {
+    public void createItemRequest_whenValidItemRequest_thenReturnItemRequest() throws Exception {
         ItemRequestDtoRequest requestDto = ItemRequestDtoRequest.builder()
                 .description("desc")
                 .build();
@@ -83,7 +83,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequestsById_whenValidId_thenReturnItemRequest() throws Exception {
+    public void getRequestsById_whenValidId_thenReturnItemRequest() throws Exception {
         long id = 1L;
 
         when(itemRequestService.getRequestsById(anyLong(), anyLong()))
@@ -102,7 +102,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getAllRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
+    public void getAllRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of();
 
         when(itemRequestService.getAllRequests(anyLong(), anyInt(), anyInt()))
@@ -118,7 +118,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getAllRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
+    public void getAllRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of(responseDto);
 
         when(itemRequestService.getAllRequests(anyLong(), anyInt(), anyInt()))
@@ -134,7 +134,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
+    public void getRequests_whenEmptyRequestItemList_thenReturnEmptyList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of();
 
         when(itemRequestService.getRequestsByOwner(anyLong(), anyInt(), anyInt()))
@@ -150,7 +150,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void getRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
+    public void getRequests_whenRequestItemListWithOneEntity_thenReturnList() throws Exception {
         List<ItemRequestDtoResponse> itemRequests = List.of(responseDto);
 
         when(itemRequestService.getRequestsByOwner(anyLong(), anyInt(), anyInt()))

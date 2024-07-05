@@ -41,7 +41,7 @@ class UserControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(userController)
                 .build();
@@ -60,7 +60,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers_whenFewUsers_thenReturnUsers() throws Exception {
+    public void getAllUsers_whenFewUsers_thenReturnUsers() throws Exception {
         List<UserDto> users = List.of(firstUser, secondUser);
 
         when(userService.getAllUsers())
@@ -82,7 +82,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers_whenEmptyUsersList_thenReturnEmptyList() throws Exception {
+    public void getAllUsers_whenEmptyUsersList_thenReturnEmptyList() throws Exception {
         List<UserDto> users = List.of();
 
         when(userService.getAllUsers())
@@ -97,7 +97,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_whenAnyUser_thenReturnUser() throws Exception {
+    public void createUser_whenAnyUser_thenReturnUser() throws Exception {
         when(userService.createUser(any()))
                 .thenReturn(firstUser);
 
@@ -114,7 +114,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUser_whenAnyUser_thenReturnUser() throws Exception {
+    public void updateUser_whenAnyUser_thenReturnUser() throws Exception {
         firstUser.builder().name("UpdateName").email("update@mail.ru").build();
 
         when(userService.updateUserById(1L, firstUser))
@@ -133,7 +133,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUser_whenAnyId_thenReturnUser() throws Exception {
+    public void getUser_whenAnyId_thenReturnUser() throws Exception {
         long id = 1L;
 
         when(userService.getUserById(id))
@@ -151,7 +151,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUser_whenAnyId_thenReturnOk() throws Exception {
+    public void deleteUser_whenAnyId_thenReturnOk() throws Exception {
         long id = 1L;
 
         mvc.perform(delete("/users/{userId}", id))

@@ -38,14 +38,14 @@ class BookingControllerTest {
             .build();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(bookingController)
                 .build();
     }
 
     @Test
-    void createBooking_whenInvalidBookingStart_thenReturnBadRequest() throws Exception {
+    public void createBooking_whenInvalidBookingStart_thenReturnBadRequest() throws Exception {
         BookingDtoRequest invalidBookingRequest = BookingDtoRequest.builder()
                 .start(LocalDateTime.now().minusDays(1L))
                 .end(LocalDateTime.now().plusDays(1L))

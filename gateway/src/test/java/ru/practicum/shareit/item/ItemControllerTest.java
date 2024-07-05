@@ -33,7 +33,7 @@ class ItemControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(itemController)
                 .build();
@@ -46,7 +46,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createItem_whenInvalidItemName_thenReturnBadRequest() throws Exception {
+    public void createItem_whenInvalidItemName_thenReturnBadRequest() throws Exception {
         itemRequest = ItemDtoShort.builder()
                 .name("")
                 .build();
@@ -63,7 +63,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createItem_whenInvalidItemDescription_thenReturnBadRequest() throws Exception {
+    public void createItem_whenInvalidItemDescription_thenReturnBadRequest() throws Exception {
         itemRequest = ItemDtoShort.builder()
                 .description("")
                 .build();
@@ -80,7 +80,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createItem_whenInvalidItemAvailable_thenReturnBadRequest() throws Exception {
+    public void createItem_whenInvalidItemAvailable_thenReturnBadRequest() throws Exception {
         itemRequest = ItemDtoShort.builder()
                 .available(null)
                 .build();
@@ -97,7 +97,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void updateItem_whenInvalidItemDescription_thenReturnBadRequest() throws Exception {
+    public void updateItem_whenInvalidItemDescription_thenReturnBadRequest() throws Exception {
         itemRequest = ItemDtoShort.builder()
                 .description("Реализовать юнит-тесты для всего кода, содержащего логику. \" +\n" +
                         "Выберите те классы, которые содержат в себе нетривиальные методы, условия и ветвления. \" +\n" +
@@ -121,7 +121,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createComment_whenInvalidCommentSize_thenReturnBadRequest() throws Exception {
+    public void createComment_whenInvalidCommentSize_thenReturnBadRequest() throws Exception {
         CommentDtoRequest commentRequest = CommentDtoRequest.builder()
                 .text("")
                 .build();
