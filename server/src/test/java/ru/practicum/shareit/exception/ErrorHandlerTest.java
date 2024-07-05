@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExceptionApiHandlerTest {
+class ErrorHandlerTest {
     private ErrorHandler errorHandler;
 
     @BeforeEach
@@ -33,7 +33,7 @@ class ExceptionApiHandlerTest {
 
     @Test
     void handleUnsupportedOperationException() {
-        UnsupportedOperationException  unsupportedOperationException = new UnsupportedOperationException("Smth is not support");
+        UnsupportedOperationException unsupportedOperationException = new UnsupportedOperationException("Smth is not support");
 
         ErrorResponse response = errorHandler.handleUnsupportedOperationException(unsupportedOperationException);
 
