@@ -53,7 +53,7 @@ class BookingServiceTest {
     private BookingDtoRequest bookingRequest;
 
     @BeforeEach
-    void init() {
+    public void init() {
         page = Paginator.simplePage(1, 5);
 
         testUser = User.builder()
@@ -92,7 +92,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_whenValidUserIdAndItemIsAvailable_thenReturnBooking() {
+    public void createBooking_whenValidUserIdAndItemIsAvailable_thenReturnBooking() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(itemStorage.findById(anyLong()))
@@ -109,7 +109,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_whenInvalidUserId_thenReturnException() {
+    public void createBooking_whenInvalidUserId_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -123,7 +123,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_whenInvalidUserIsOwner_thenReturnException() {
+    public void createBooking_whenInvalidUserIsOwner_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         when(itemStorage.findById(anyLong()))
@@ -139,7 +139,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_whenInvalidItemId_thenReturnException() {
+    public void createBooking_whenInvalidItemId_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         when(itemStorage.findById(anyLong()))
@@ -155,7 +155,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void createBooking_whenItemIsNotAvailable_thenReturnException() {
+    public void createBooking_whenItemIsNotAvailable_thenReturnException() {
         testItem.setAvailable(false);
 
         when(userStorage.findById(anyLong()))
@@ -173,7 +173,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void approvedBooking_whenOwnerAndBookingIsNotWaiting_thenReturnBooking() {
+    public void approvedBooking_whenOwnerAndBookingIsNotWaiting_thenReturnBooking() {
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
         when(bookingStorage.save(any(Booking.class)))
@@ -192,7 +192,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void approvedBooking_whenInvalidBookingId_thenReturnException() {
+    public void approvedBooking_whenInvalidBookingId_thenReturnException() {
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -205,7 +205,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void approvedBooking_whenBookingStatusIsApproved_thenReturnException() {
+    public void approvedBooking_whenBookingStatusIsApproved_thenReturnException() {
         testBooking.setStatus(BookingStatus.APPROVED);
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
@@ -219,7 +219,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void approvedBooking_whenBookingStatusIsReject_thenReturnException() {
+    public void approvedBooking_whenBookingStatusIsReject_thenReturnException() {
         testBooking.setStatus(BookingStatus.REJECTED);
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
@@ -233,7 +233,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void approvedBooking_whenUserIsNotOwner_thenReturnException() {
+    public void approvedBooking_whenUserIsNotOwner_thenReturnException() {
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
 
@@ -246,7 +246,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getBookingById_whenOwnerOrBookerAndBookingExist_thenReturnBooking() {
+    public void getBookingById_whenOwnerOrBookerAndBookingExist_thenReturnBooking() {
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
 
@@ -257,7 +257,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getBookingById_whenInvalidUserId_thenReturnException() {
+    public void getBookingById_whenInvalidUserId_thenReturnException() {
         long userId = 100L;
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testBooking));
@@ -270,7 +270,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getBookingById_whenInvalidBookingId_thenReturnException() {
+    public void getBookingById_whenInvalidBookingId_thenReturnException() {
         when(bookingStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -282,7 +282,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusAll_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusAll_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -298,7 +298,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusCurrent_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusCurrent_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -313,7 +313,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusPast_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusPast_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -328,7 +328,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusFuture_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusFuture_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -343,7 +343,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusWaiting_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusWaiting_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -358,7 +358,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidUserIdAndStatusRejected_thenReturnBookingList() {
+    public void getSortBookingByUser_whenValidUserIdAndStatusRejected_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testUser));
         List<Booking> bookings = List.of(testBooking);
@@ -373,7 +373,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenInvalidStatus_thenReturnException() {
+    public void getSortBookingByUser_whenInvalidStatus_thenReturnException() {
         String state = "INVALID_STATUS";
 
         BookingStatusException exception = assertThrows(BookingStatusException.class,
@@ -384,7 +384,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByUser_whenInvalidUserId_thenReturnException() {
+    public void getSortBookingByUser_whenInvalidUserId_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -397,7 +397,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndBookingExist_thenReturnBooking() {
+    public void getSortBookingByOwner_whenValidUserIdAndBookingExist_thenReturnBooking() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -413,7 +413,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenInvalidUserId_thenReturnException() {
+    public void getSortBookingByOwner_whenInvalidUserId_thenReturnException() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -426,7 +426,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusAll_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusAll_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -442,7 +442,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusCurrent_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusCurrent_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -457,7 +457,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusPast_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusPast_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -472,7 +472,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusFuture_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusFuture_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -487,7 +487,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusWaiting_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusWaiting_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -502,7 +502,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidUserIdAndStatusRejected_thenReturnBookingList() {
+    public void getSortBookingByOwner_whenValidUserIdAndStatusRejected_thenReturnBookingList() {
         when(userStorage.findById(anyLong()))
                 .thenReturn(Optional.of(testOwner));
         List<Booking> bookings = List.of(testBooking);
@@ -517,7 +517,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenInvalidStatus_thenReturnException() {
+    public void getSortBookingByOwner_whenInvalidStatus_thenReturnException() {
         String state = "INVALID_STATUS";
 
         BookingStatusException exception = assertThrows(BookingStatusException.class,

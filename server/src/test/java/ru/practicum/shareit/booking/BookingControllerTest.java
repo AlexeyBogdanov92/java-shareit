@@ -50,7 +50,7 @@ class BookingControllerTest {
             .build();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(bookingController)
                 .build();
@@ -72,7 +72,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void createBooking_whenValidBooking_thenReturnBooking() throws Exception {
+    public void createBooking_whenValidBooking_thenReturnBooking() throws Exception {
         when(bookingService.createBooking(anyLong(), any(BookingDtoRequest.class)))
                 .thenReturn(bookingResponse);
 
@@ -90,7 +90,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void approvedBooking_whenStatusApprove_thenReturnBooking() throws Exception {
+    public void approvedBooking_whenStatusApprove_thenReturnBooking() throws Exception {
         when(bookingService.approvedBooking(anyLong(), anyBoolean(), anyLong()))
                 .thenReturn(bookingResponse);
         long id = 1;
@@ -108,7 +108,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void getBookingById_whenValidId_thenReturnBooking() throws Exception {
+    public void getBookingById_whenValidId_thenReturnBooking() throws Exception {
         when(bookingService.getBookingById(anyLong(), anyLong()))
                 .thenReturn(bookingResponse);
         long id = 1;
@@ -126,7 +126,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void getSortBookingByUser_whenValidSortState_thenReturnBookingList() throws Exception {
+    public void getSortBookingByUser_whenValidSortState_thenReturnBookingList() throws Exception {
         List<BookingDtoResponse> responseList = List.of(bookingResponse);
 
         when(bookingService.getSortBookingByUser(anyLong(), anyString(), anyInt(), anyInt()))
@@ -142,7 +142,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void getSortBookingByOwner_whenValidSortState_thenReturnBookingList() throws Exception {
+    public void getSortBookingByOwner_whenValidSortState_thenReturnBookingList() throws Exception {
         List<BookingDtoResponse> responseList = List.of(bookingResponse);
 
         when(bookingService.getSortBookingByOwner(anyLong(), anyString(), anyInt(), anyInt()))

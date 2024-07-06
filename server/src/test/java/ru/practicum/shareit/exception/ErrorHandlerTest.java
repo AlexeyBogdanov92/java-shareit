@@ -9,12 +9,12 @@ class ErrorHandlerTest {
     private ErrorHandler errorHandler;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         errorHandler = new ErrorHandler();
     }
 
     @Test
-    void handleNotFoundException() {
+    public void handleNotFoundException() {
         NotFoundException notFoundException = new NotFoundException("Smth is not found");
 
         ErrorResponse response = errorHandler.handleNotFoundException(notFoundException);
@@ -23,7 +23,7 @@ class ErrorHandlerTest {
     }
 
     @Test
-    void handleConflictException() {
+    public void handleConflictException() {
         ConflictException conflictException = new ConflictException("Smth is wrong");
 
         ErrorResponse response = errorHandler.handleConflictException(conflictException);
@@ -32,7 +32,7 @@ class ErrorHandlerTest {
     }
 
     @Test
-    void handleUnsupportedOperationException() {
+    public void handleUnsupportedOperationException() {
         UnsupportedOperationException unsupportedOperationException = new UnsupportedOperationException("Smth is not support");
 
         ErrorResponse response = errorHandler.handleUnsupportedOperationException(unsupportedOperationException);
@@ -41,7 +41,7 @@ class ErrorHandlerTest {
     }
 
     @Test
-    void handleBookingException() {
+    public void handleBookingException() {
         BookingStatusException statusException = new BookingStatusException("Smth With Booking");
 
         ErrorResponse response = errorHandler.handleBookingException(statusException);

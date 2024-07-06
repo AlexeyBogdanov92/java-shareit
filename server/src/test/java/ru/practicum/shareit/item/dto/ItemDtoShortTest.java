@@ -13,7 +13,7 @@ class ItemDtoShortTest {
     private JacksonTester<ItemDtoShort> json;
 
     @Test
-    void testItemDtoShort() throws Exception {
+    public void testItemDtoShort() throws Exception {
         ItemDtoShort dto = ItemDtoShort.builder()
                 .id(1L)
                 .name("Thing")

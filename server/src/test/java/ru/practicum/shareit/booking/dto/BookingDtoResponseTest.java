@@ -19,7 +19,7 @@ class BookingDtoResponseTest {
     private JacksonTester<BookingDtoResponse> json;
 
     @Test
-    void testBookingDtoResponse() throws Exception {
+    public void testBookingDtoResponse() throws Exception {
         BookingDtoResponse dto = BookingDtoResponse.builder()
                 .id(1L)
                 .status(BookingStatus.APPROVED)

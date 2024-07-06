@@ -47,7 +47,7 @@ class ItemControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
-    void init() {
+    public void init() {
         mvc = MockMvcBuilders
                 .standaloneSetup(itemController)
                 .build();
@@ -79,7 +79,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createItem_whenValidItem_thenReturnItem() throws Exception {
+    public void createItem_whenValidItem_thenReturnItem() throws Exception {
         when(itemService.createItem(anyLong(), any(ItemDtoShort.class)))
                 .thenReturn(itemResponse);
 
@@ -99,7 +99,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void updateItem_whenValidItem_thenReturnItem() throws Exception {
+    public void updateItem_whenValidItem_thenReturnItem() throws Exception {
         when(itemService.updateItem(anyLong(), anyLong(), any(ItemDtoShort.class)))
                 .thenReturn(itemResponse);
         long id = 1L;
@@ -120,7 +120,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItem_whenValidId_thenReturnItem() throws Exception {
+    public void getItem_whenValidId_thenReturnItem() throws Exception {
         when(itemService.getItem(anyLong(), anyLong()))
                 .thenReturn(itemResponseFull);
         long id = 1L;
@@ -143,7 +143,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemsByUser_whenEmptyItemList_thenReturnEmptyList() throws Exception {
+    public void getItemsByUser_whenEmptyItemList_thenReturnEmptyList() throws Exception {
         List<ItemDto> items = List.of();
 
         when(itemService.getItemsByUser(anyLong(), anyInt(), anyInt()))
@@ -159,7 +159,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void getItemsByUser_whenItemListWithOneItem_thenReturnList() throws Exception {
+    public void getItemsByUser_whenItemListWithOneItem_thenReturnList() throws Exception {
         List<ItemDto> items = List.of(itemResponseFull);
 
         when(itemService.getItemsByUser(anyLong(), anyInt(), anyInt()))
@@ -183,7 +183,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void searchItems_whenEmptyItemList_thenReturnEmptyList() throws Exception {
+    public void searchItems_whenEmptyItemList_thenReturnEmptyList() throws Exception {
         List<ItemDtoShort> items = List.of(itemResponse);
 
         when(itemService.searchItems(anyString(), anyInt(), anyInt()))
@@ -204,7 +204,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void searchItems_whenItemListWithOneItem_thenReturnList() throws Exception {
+    public void searchItems_whenItemListWithOneItem_thenReturnList() throws Exception {
         List<ItemDtoShort> items = List.of();
 
         when(itemService.searchItems(anyString(), anyInt(), anyInt()))
@@ -220,7 +220,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void createComment_whenValidComment_thenReturnComment() throws Exception {
+    public void createComment_whenValidComment_thenReturnComment() throws Exception {
         CommentDtoResponse commentResponse = CommentDtoResponse.builder()
                 .id(1L)
                 .created(LocalDateTime.now())

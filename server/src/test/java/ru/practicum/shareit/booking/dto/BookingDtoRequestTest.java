@@ -16,7 +16,7 @@ class BookingDtoRequestTest {
     private JacksonTester<BookingDtoRequest> json;
 
     @Test
-    void testBookingDtoRequest() throws Exception {
+    public void testBookingDtoRequest() throws Exception {
         BookingDtoRequest dto = BookingDtoRequest.builder()
                 .start(LocalDateTime.of(2022, 07, 03, 19, 55, 00))
                 .end(LocalDateTime.of(2023, 07, 03, 19, 55, 00))

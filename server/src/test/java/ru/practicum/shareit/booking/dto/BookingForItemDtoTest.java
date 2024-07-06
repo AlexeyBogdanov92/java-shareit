@@ -14,7 +14,7 @@ class BookingForItemDtoTest {
     private JacksonTester<BookingForItemDto> json;
 
     @Test
-    void testBookingForItemDto() throws Exception {
+    public void testBookingForItemDto() throws Exception {
         BookingForItemDto dto = BookingForItemDto.builder()
                 .id(1L)
                 .bookerId(1L)

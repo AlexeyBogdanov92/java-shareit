@@ -112,7 +112,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void getUserById_whenValidUserId_thenReturnUser()  {
+    public void getUserById_whenValidUserId_thenReturnUser() {
         long userId = 1L;
         User expectedUser = new User();
 
