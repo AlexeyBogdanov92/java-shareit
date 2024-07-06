@@ -14,7 +14,7 @@ class ItemRequestDtoRequestTest {
     private JacksonTester<ItemRequestDtoRequest> json;
 
     @Test
-    void testItemRequestDtoRequest() throws Exception {
+    public void testItemRequestDtoRequest() throws Exception {
         ItemRequestDtoRequest dto = ItemRequestDtoRequest.builder()
                 .description("desc")
                 .build();
